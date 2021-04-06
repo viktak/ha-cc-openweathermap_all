@@ -3,6 +3,7 @@
     "name": "OpenWeatherMap All API",
     "documentation": "https://github.com/viktak/ha-cc-openweathermap_all",
     "issue_tracker": "https://github.com/viktak/ha-cc-openweathermap_all/issues",
+    "dependencies": [],
     "codeowners": ["@viktak"],
     "requirements": ["owm2json==0.1.89"],
     "version": "0.0.1"

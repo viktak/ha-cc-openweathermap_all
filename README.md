@@ -1,4 +1,4 @@
-![GitHub](https://img.shields.io/github/license/viktak/ha-cc-openweathermap_all) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/viktak/ha-cc-openweathermap_all)
+![Home_Assistant](https://img.shields.io/badge/Home-Assistant-blue) ![GitHub](https://img.shields.io/github/license/viktak/ha-cc-openweathermap_all) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/viktak/ha-cc-openweathermap_all)
 
 # ha-cc-openweathermap_all
 Home Assistant custom component combining multiple OpenWeatherMap API calls

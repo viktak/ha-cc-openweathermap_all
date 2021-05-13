@@ -6,6 +6,7 @@
     "dependencies": [],
     "codeowners": ["@viktak"],
     "requirements": ["owm2json==0.1.89"],
-    "version": "0.0.1"
+    "version": "0.0.1",
+    "iot_class": "cloud_polling"
   }
   

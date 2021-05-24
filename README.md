@@ -43,7 +43,7 @@ More are coming in the future as the API, my free time and my skills allow. :)
 
 ## Sample screenshot of sensors (using [mini-graph-card](https://github.com/kalkih/mini-graph-card))
 
-![screenshot](./images/owm-sample-screenshot.png)
+![screenshot](https://raw.githubusercontent.com/viktak/ha-cc-openweathermap_all/main/images/owm-sample-screenshot.png)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

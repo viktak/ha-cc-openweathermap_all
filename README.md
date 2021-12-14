@@ -38,6 +38,7 @@ Currently, the following sensors are created by this integration:
 - sensor.owm_pollution_ozone_o3
 - sensor.owm_pollution_sulphur_dioxide_so2
 - sensor.owm_ultraviolet_index
+- sensor.owm_pollution_forecast
 
 More are coming in the future as the API, my free time and my skills allow. :)
 

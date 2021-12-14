@@ -48,7 +48,7 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
     lat = config.get(CONF_LATITUDE)
     lon = config.get(CONF_LONGITUDE)
     appid = config.get(CONF_API_KEY)
-    api_list = ["air_pollution/forecast"]
+    api_list = ["air_pollution/forecast", "air_pollution", "onecall"]
 
     try:
         data = OwmPollutionData(api_list, lat, lon, appid)
@@ -140,45 +140,48 @@ class OwmPollutionSensor(Entity):
             #   air_pollution
 
             if self.type == 'co':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["components"]["co"])
+                self._state = float(owmData["air_pollution"]["list"][0]["components"]["co"])
 
             elif self.type == 'no':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["components"]["no"])
+                self._state = float(owmData["air_pollution"]["list"][0]["components"]["no"])
 
             elif self.type == 'no2':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["components"]["no2"])
+                self._state = float(owmData["air_pollution"]["list"][0]["components"]["no2"])
 
             elif self.type == 'o3':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["components"]["o3"])
+                self._state = float(owmData["air_pollution"]["list"][0]["components"]["o3"])
 
             elif self.type == 'so2':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["components"]["so2"])
+                self._state = float(owmData["air_pollution"]["list"][0]["components"]["so2"])
 
             elif self.type == 'nh3':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["components"]["nh3"])
+                self._state = float(owmData["air_pollution"]["list"][0]["components"]["nh3"])
 
             elif self.type == 'pm2_5':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["components"]["pm2_5"])
+                self._state = float(owmData["air_pollution"]["list"][0]["components"]["pm2_5"])
 
             elif self.type == 'pm10':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["components"]["pm10"])
+                self._state = float(owmData["air_pollution"]["list"][0]["components"]["pm10"])
 
             elif self.type == 'aqi':
-                self._state = float(owmData["air_pollution/forecast"]["list"][0]["main"]["aqi"])
+                self._state = float(owmData["air_pollution"]["list"][0]["main"]["aqi"])
 
-            #   onecall
-
-            elif self.type == 'uvi':
-                self._state = float(owmData["onecall"]["current"]["uvi"])
+            # air_pollution/forecast
 
             elif self.type == 'forecast':
                 self._state = float(owmData["air_pollution/forecast"]["list"][0]["main"]["aqi"])
-                self._extra_state_attributes = {"forecast": []}
+                self._extra_state_attributes = dict(owmData["air_pollution"]["list"][0]["components"])
+                self._extra_state_attributes["forecast"] = []
                 for f in owmData["air_pollution/forecast"]["list"]:
                     fdict = {"datetime": datetime.fromtimestamp(f["dt"], tz=timezone.utc).isoformat()}
                     fdict.update(f["components"])
                     fdict.update(f["main"])
                     self._extra_state_attributes["forecast"].append(fdict)
+
+            # onecall
+
+            elif self.type == 'uvi':
+                self._state = float(owmData["onecall"]["current"]["uvi"])
 
         except ValueError:
             self._state = None

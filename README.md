@@ -38,12 +38,17 @@ Currently, the following sensors are created by this integration:
 - sensor.owm_pollution_ozone_o3
 - sensor.owm_pollution_sulphur_dioxide_so2
 - sensor.owm_ultraviolet_index
+- sensor.owm_pollution_forecast
 
 More are coming in the future as the API, my free time and my skills allow. :)
 
 ## Sample screenshot of sensors (using [mini-graph-card](https://github.com/kalkih/mini-graph-card))
 
-![screenshot](https://raw.githubusercontent.com/viktak/ha-cc-openweathermap_all/main/images/owm-sample-screenshot.png)
+![screenshot](images/owm-sample-screenshot.png)
+
+## Sample screenshot of sensors (using [apexcharts-card](https://github.com/RomRider/apexcharts-card))
+
+![screenshot](images/owm-sample-forecast.png)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.

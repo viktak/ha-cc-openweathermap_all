@@ -1,7 +1,7 @@
 """Platform for sensor integration."""
 
 import logging
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 import json
 import requests
 import voluptuous as vol
@@ -22,7 +22,7 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Required(CONF_API_KEY): cv.string,
     vol.Required(CONF_LATITUDE): cv.string,
     vol.Required(CONF_LONGITUDE): cv.string,
-    #vol.Required("api_list"): cv.ensure_list,
+    # vol.Required("api_list"): cv.ensure_list,
 })
 
 SENSOR_PREFIX_ROOT = 'OWM '
@@ -39,14 +39,16 @@ SENSOR_TYPES = {
     'pm10': ['Coarse particles (PM10)', 'μg/m3', 'mdi:grain'],
     'aqi': ['Overall Air Quality', '', 'mdi:lungs'],
     'uvi': ['Ultraviolet index', 'idx', 'mdi:hazard-lights'],
+    'forecast': ['Forecast', '', 'mdi:eye-arrow-right'],
 }
+
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     """Set up the sensor platform."""
     lat = config.get(CONF_LATITUDE)
     lon = config.get(CONF_LONGITUDE)
     appid = config.get(CONF_API_KEY)
-    api_list = ["air_pollution", "onecall"]
+    api_list = ["air_pollution/forecast", "air_pollution", "onecall"]
 
     try:
         data = OwmPollutionData(api_list, lat, lon, appid)
@@ -85,6 +87,7 @@ class OwmPollutionData(object):
             self.data = None
             return False
 
+
 class OwmPollutionSensor(Entity):
     """Representation of a Sensor."""
 
@@ -99,7 +102,7 @@ class OwmPollutionSensor(Entity):
         self._unit = SENSOR_TYPES[self.type][1]
         self._icon = SENSOR_TYPES[self.type][2]
         self._state = None
-
+        self._extra_state_attributes = None
 
     @property
     def name(self):
@@ -117,6 +120,9 @@ class OwmPollutionSensor(Entity):
     def unit_of_measurement(self):
         return self._unit
 
+    @property
+    def extra_state_attributes(self):
+        return self._extra_state_attributes
 
     def update(self):
         """Fetch new state data for the sensor.
@@ -127,7 +133,7 @@ class OwmPollutionSensor(Entity):
 
         owmData = self.data.data
 
-        #_LOGGER.debug("pollutionData = %s", pollutionData)
+        # _LOGGER.debug("pollutionData = %s", pollutionData)
 
         try:
 
@@ -156,15 +162,26 @@ class OwmPollutionSensor(Entity):
 
             elif self.type == 'pm10':
                 self._state = float(owmData["air_pollution"]["list"][0]["components"]["pm10"])
-                
+
             elif self.type == 'aqi':
                 self._state = float(owmData["air_pollution"]["list"][0]["main"]["aqi"])
-                
 
-            #   onecall
+            # air_pollution/forecast
+
+            elif self.type == 'forecast':
+                self._state = float(owmData["air_pollution/forecast"]["list"][0]["main"]["aqi"])
+                self._extra_state_attributes = dict(owmData["air_pollution"]["list"][0]["components"])
+                self._extra_state_attributes["forecast"] = []
+                for f in owmData["air_pollution/forecast"]["list"]:
+                    fdict = {"datetime": datetime.fromtimestamp(f["dt"], tz=timezone.utc).isoformat()}
+                    fdict.update(f["components"])
+                    fdict.update(f["main"])
+                    self._extra_state_attributes["forecast"].append(fdict)
+
+            # onecall
 
             elif self.type == 'uvi':
                 self._state = float(owmData["onecall"]["current"]["uvi"])
-                
+
         except ValueError:
             self._state = None

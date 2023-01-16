@@ -50,6 +50,9 @@ More are coming in the future as the API, my free time and my skills allow. :)
 
 ![screenshot](images/owm-sample-forecast.png)
 
+## User submitted examples:
+[dimankiev](https://github.com/viktak/ha-cc-openweathermap_all/issues/13#issue-1533019661)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 

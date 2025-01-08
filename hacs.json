@@ -2,7 +2,7 @@
     "name": "OpenWeatherMap All",
     "country": "GR",
     "domains": ["sensor"],
-    "homeassistant": "core-2021.3.4",
+    "homeassistant": "2021.4.0",
     "iot_class": ["Cloud Polling"],
     "render_readme": true
   }

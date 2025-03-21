@@ -1,3 +1,8 @@
+### Now OpenWeatherMap requires credit card information for using their APIs. I do not endorse this behaviour, so this component is now unfortunately shut down.
+
+
+
+
 ![Home_Assistant](https://img.shields.io/badge/Home-Assistant-blue) [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs) [![hacs_badge](https://img.shields.io/badge/HACS-Default-orange.svg)](https://github.com/custom-components/hacs) ![GitHub](https://img.shields.io/github/license/viktak/ha-cc-openweathermap_all) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/viktak/ha-cc-openweathermap_all)
 
 # ha-cc-openweathermap_all
